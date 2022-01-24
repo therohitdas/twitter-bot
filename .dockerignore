@@ -124,3 +124,9 @@ Dockerfile
 
 #start.sh file
 start.sh
+
+#.git directory
+.git/
+
+#.github directory
+.github/
