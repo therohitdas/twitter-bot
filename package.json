@@ -1,0 +1,29 @@
+{
+  "name": "twitter-bot",
+  "version": "0.1.0",
+  "description": "A classic Twitter Retweet Bot - easy to deploy and configure. ",
+  "main": "main.js",
+  "scripts": {
+    "start": "node main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/therohitdas/twitter-bot.git"
+  },
+  "keywords": [
+    "Twitter",
+    "Bot"
+  ],
+  "author": "Rohit Das",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/therohitdas/twitter-bot/issues"
+  },
+  "homepage": "https://github.com/therohitdas/twitter-bot#readme",
+  "dependencies": {
+    "@therohitdas/profanityjs": "^0.1.2",
+    "dotenv": "^10.0.0",
+    "node-cron": "^3.0.0",
+    "twit": "^2.2.11"
+  }
+}
