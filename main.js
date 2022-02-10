@@ -25,6 +25,13 @@ var modes = configs.modes;
 
 console.log("Starting bot...");
 
+if (!configs.debugMode) {
+  console.debug = () => {};
+} else {
+  console.debug("Debug mode enabled");
+  console.debug(configs);
+}
+
 // check if all required ENV variables are set.
 if (
   !configs.twitter.consumer_key ||
@@ -91,13 +98,29 @@ function tweetHandler(tweet) {
   tweet.user.name = tweet.user.name.toLowerCase();
   // filter tweet for banned words
   if (!configs.allowRetweets && tweet.text.includes("RT @")) {
+    // debug pattern - Reason: retweet detected, Text:
+    console.debug("Reason: retweet detected, Text: " + tweet.text);
     return;
   } else if (!configs.allowProfanity && containsProfanity(tweet.text, true)) {
+    console.debug("Reason: profanity detected, Text: " + tweet.text);
     return;
   } else if (
     blockedTermsFilter(configs.blockedTerms, tweet) ||
     blockedUserFilter(configs.blockedUsers, tweet)
   ) {
+    // debug pattern - Reason: blocked term detected, Text: {text}, User: {user}
+    console.debug(
+      "Reason: blocked term detected, Text: " + tweet.text,
+      " User: ",
+      tweet.user.screen_name
+    );
+    return;
+  } else if (tweet.entities.hashtags.length > configs.hastagLimit) {
+    // debug pattern - Reason: too many hashtags, Text: , User:
+    console.debug(
+      "Reason: too many hashtags, Text: " + tweet.text,
+      " Hashtag Count: " + tweet.entities.hashtags.length
+    );
     return;
   }
 
@@ -120,8 +143,13 @@ function like(id) {
         incrementCounter("likes");
         if (rateLimitTrackers.rateLimitWindowStartTimeLike == 0) {
           rateLimitTrackers.rateLimitWindowStartTimeLike = new Date().getTime();
+          console.debug(
+            "Rate limit window start time for likes set to " +
+              rateLimitTrackers.rateLimitWindowStartTimeLike
+          );
         }
         if (counters.likes % 1000 == 0) {
+          console.debug("Likes: " + counters.likes);
           pause("like");
         }
       } else if (err) {
@@ -135,7 +163,7 @@ function like(id) {
           console.error("Rate limit exceeded. Sleeping for remaining time...");
           pause("like");
         } else {
-          console.error("Error: id - " + id + " Message: " + err.message);
+          console.error("Unknown error: " + JSON.stringify(err));
         }
       }
     }
@@ -155,7 +183,7 @@ function retweet(id) {
         console.error("Rate limit exceeded. Sleeping for remaining time...");
         pause("retweet");
       } else {
-        console.error("Error: id - " + id + " Message: " + err.message);
+        console.error("Unknown error: " + JSON.stringify(err));
       }
     } else {
       console.log("Retweeted tweet " + tick + " " + id);
@@ -236,7 +264,7 @@ function pause(key) {
   }
 
   rateLimited[key] = true;
-
+  console.debug("Rate limit setting: " + JSON.stringify(rateLimited));
   setTimeout(() => {
     console.log("Resuming bot functions - " + key + "...");
     if (key == "like") {

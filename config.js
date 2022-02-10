@@ -21,6 +21,9 @@ var mode = process.env.BOT_MODE ? process.env.BOT_MODE.split(",") : ["all"]; // 
 var recurringTweet = process.env.BOT_RECURRING_TWEET; // text
 var recurringTweetInterval = process.env.BOT_RECURRING_TWEET_INTERVAL; // cron style
 
+var hastagLimit = parseInt(process.env.BOT_HASHTAG_LIMIT || "5");
+var debugMode = process.env.BOT_DEBUG_MODE == "true" ? true : false;
+
 var modes = {
   like: false,
   retweet: false,
@@ -61,4 +64,6 @@ exports.configs = {
   allowRetweets: allowRetweets,
   recurringTweet: recurringTweet,
   recurringTweetInterval: recurringTweetInterval,
+  hastagLimit: hastagLimit,
+  debugMode: debugMode,
 };

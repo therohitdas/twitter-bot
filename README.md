@@ -60,6 +60,8 @@ If you want to pass more than one value for a configuration, you can pass it as 
     - BOT_BLOCKED_TERMS: List of terms to filter the tweets. Default: none
     - BOT_BLOCKED_USERS: List of users to block from tweets. Default: none
     - BOT_ALLOW_PROFANITY: Allow bot to post tweets with profanity. Default: false
+    - BOT_HASHTAG_LIMIT: Limit the number of hastags that is allowed in the tweet. Default: 5
+    - BOT_DEBUG_MODE: Enable debug mode. Default: false
     - BOT_MODE: Mode of the bot. accepted values - like, retweet, follow, unfollow. Default: all
     - BOT_RECURRING_TWEET: Recurring tweet to tweet. Default: none
     - BOT_RECURRING_TWEET_INTERVAL: CRON syntax for recurring tweet interval. Default: none
