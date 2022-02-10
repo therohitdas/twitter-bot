@@ -38,6 +38,8 @@ I suggest using Docker with [Captain Rover](https://caprover.com/) to deploy thi
 
 For Docker deployments, pull the docker image and run it using the follwing command:
 
+    docker pull therohitdas/twitter-bot
+    
     sudo docker run \
         -e BOT_ALLOW_RETWEETS=true \
         -e BOT_HASHTAG=100daysofwriting \
